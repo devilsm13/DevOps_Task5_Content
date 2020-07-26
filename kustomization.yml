@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- prom-pvc.yml
+- grafana-pvc.yml
+- prom-service.yml
+- grafana-service.yml
+- prom-configmap.yml
+- prom-deployment.yml
+- grafana-deployment.yml

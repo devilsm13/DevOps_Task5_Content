@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prom-deployment
+spec:
+  selector:
+    matchLabels:
+      env: dev
+      dc: IN
+  template:
+    metadata:
+      labels:
+        env: dev
+        dc: IN
+    spec:
+      containers:
+      - name: prom-con
+        image: prom/prometheus
+        ports:
+        - containerPort: 9090
+        volumeMounts:
+          - name: pvc
+            mountPath: /prometheus/data
+          - name: cmap
+            mountPath: /etc/prometheus/prometheus.yml
+            subPath: prometheus.yml
+      volumes:
+          - name: pvc
+            persistentVolumeClaim:
+              claimName: prom-pvc
+          - name: cmap
+            configMap:
+              name: prom-configmap
